@@ -1,0 +1,1 @@
+Build NovaEraERP Mobile UI + Tailscale diagnostic fix
