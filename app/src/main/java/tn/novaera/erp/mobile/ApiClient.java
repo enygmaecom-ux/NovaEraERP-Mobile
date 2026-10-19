@@ -18,12 +18,37 @@ import java.nio.charset.StandardCharsets;
 public final class ApiClient {
     public static final String PREFS = "nova_mobile";
     private final Context context;
+    private JSONObject bundledConfig;
 
     public ApiClient(Context context) { this.context = context.getApplicationContext(); }
 
     private SharedPreferences prefs() { return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE); }
-    public String baseUrl() { return prefs().getString("server_url", "").replaceAll("/+$", ""); }
-    public String key() { return prefs().getString("mobile_key", ""); }
+
+    private JSONObject bundledConfig() {
+        if (bundledConfig != null) return bundledConfig;
+        bundledConfig = new JSONObject();
+        try (InputStream is = context.getResources().openRawResource(R.raw.preconfig);
+             BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) sb.append(line);
+            bundledConfig = new JSONObject(sb.toString());
+        } catch (Exception ignored) {}
+        return bundledConfig;
+    }
+
+    public String baseUrl() {
+        String v = prefs().getString("server_url", "").trim();
+        if (v.isEmpty()) v = bundledConfig().optString("server_url", "").trim();
+        return v.replaceAll("/+$", "");
+    }
+
+    public String key() {
+        String v = prefs().getString("mobile_key", "").trim();
+        if (v.isEmpty()) v = bundledConfig().optString("mobile_key", "").trim();
+        return v;
+    }
+
     public boolean configured() { return !baseUrl().isEmpty() && !key().isEmpty(); }
 
     public void saveConfig(String url, String key) {
