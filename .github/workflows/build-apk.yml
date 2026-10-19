@@ -12,11 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Extract Android project
-        run: |
-          mkdir -p android-src
-          unzip -q NovaEraERP_Mobile_Source.zip -d android-src
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -27,11 +22,10 @@ jobs:
           gradle-version: '8.13'
 
       - name: Build APK
-        working-directory: android-src
         run: gradle :app:assembleDebug --stacktrace
 
       - name: Prepare APK
-        run: cp android-src/app/build/outputs/apk/debug/app-debug.apk NovaEraERP_Mobile_V7.2.3.12.apk
+        run: cp app/build/outputs/apk/debug/app-debug.apk NovaEraERP_Mobile_V7.2.3.12.apk
 
       - uses: actions/upload-artifact@v4
         with:
