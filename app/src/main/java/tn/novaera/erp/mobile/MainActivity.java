@@ -16,6 +16,8 @@ import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.graphics.Rect;
 import android.provider.Settings;
 import android.text.InputType;
 import android.view.Gravity;
