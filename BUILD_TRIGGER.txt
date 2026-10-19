@@ -1,1 +1,1 @@
-Trigger APK build for NovaEraERP Mobile V7.2.3.12
+Trigger APK build for NovaEraERP Mobile V7.2.3.12 — build 2
