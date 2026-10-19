@@ -1,0 +1,25 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'tn.novaera.erp.mobile'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'tn.novaera.erp.mobile'
+        minSdk 26
+        targetSdk 36
+        versionCode 7231201
+        versionName '7.2.3.12-mobile-1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
