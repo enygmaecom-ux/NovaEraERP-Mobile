@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NovaEraERP Mobile</string>
+    <string name="sync_channel">NovaEraERP Live Sync</string>
+    <string name="sync_notification">NovaEraERP — Live sync active</string>
+</resources>
