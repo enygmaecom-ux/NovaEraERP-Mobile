@@ -1,0 +1,25 @@
+name: Export Android Signing Tools
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find Android build tools
+        run: |
+          set -euxo pipefail
+          BUILD_TOOLS_DIR="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+          echo "Using $BUILD_TOOLS_DIR"
+          mkdir -p exported-tools
+          cp "$BUILD_TOOLS_DIR/zipalign" exported-tools/
+          cp "$BUILD_TOOLS_DIR/apksigner" exported-tools/
+          cp "$BUILD_TOOLS_DIR/lib/apksigner.jar" exported-tools/
+          chmod +x exported-tools/zipalign exported-tools/apksigner
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-signing-tools
+          path: exported-tools/
